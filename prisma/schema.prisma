@@ -4,23 +4,26 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-model User {
-  id    Int     @default(autoincrement()) @id
+model Karyawan {
+  id    String    @default(uuid()) @id  //UUID sebagai primarykey
   email String  @unique
-  name  String?
-  posts Post[]
+  name  String?  //Bisa ditulis kosong 
+  posisi String
+  date DateTime @default(now()) // Dokumentasi tanggal saat ini
+  Lembur Lembur[]  // Relasi ke tabel lembur one to many
 }
 
-model Post {
-  id        Int      @default(autoincrement()) @id
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model Lembur {
+  id       String      @default(uuid()) @id //UUID sebaga primarykey
+  karyawanId String
+  tanggal  DateTime 
+  durasi Int // satuan jam
+  keterangan String
+
+  karyawan Karyawan @relation(fields: [karyawanId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
