@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const { PrismaClient } = require("@prisma/client");
 const cors = require("cors");
+const bodyParser = require('body-parser');
+
 
 //konfigurasi dan inilisasi
 dotenv.config();
@@ -11,6 +13,7 @@ const prisma = new PrismaClient();
 
 app.use(express.json()); // Memungkinkan aplikasi untuk membaca JSON dalam body request
 app.use(cors());  // Mengaktifkan CORS agar API bisa diakses dari berbagai domain
+app.use(bodyParser.json());
 
 //route awal
 app.get('/selamat', (req, res) => {
@@ -45,7 +48,7 @@ app.post("/karyawan", async (req, res) => {
     const newkaryawan = await prisma.karyawan.create({ data: { name, email } });    //Menambahkan karyawan data padakaryawan
     res.json(newkaryawan);
   } catch (error) {
-    res.status(500).json({ error: "Gagal menambahkan data" });
+    res.status(500).json({ error: "Gagal menambahkan data. Silahkan coba lagi" });
   }
 });
 
@@ -77,3 +80,16 @@ const PORT = process.env.PORT || 5000; // Port yang digunakan adalah 5000
 app.listen(PORT, () => {                                            
   console.log(`Server berjalan nih di http://localhost:${PORT}`);
 });
+
+
+const authMiddleware = require("../middlewares/authMiddleware");
+
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const karyawan = await prisma.karyawan.findMany();
+    res.json(karyawan);
+  } catch (error) {
+    res.status(500).json({ error: "Terjadi kesalahan saat mengambil data karyawan" });
+  }
+});
+

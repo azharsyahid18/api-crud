@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tampilan Lembur Karyawan</title>
+</head>
+<body>
+    <h1>Data lembur karyawan</h1>
+    <ul id="data-list"></ul>
+
+    <script>
+        async function fetchData() {
+            const response = await fetch('http://localhost:4500/Karyawan');
+            const data = await response.json();
+            
+            const dataList = document.getElementById('data-list');
+            dataList.innerHTML = data.map(karyawan => 
+                `<li>${karyawan.name} - ${karyawan.email} - ${karyawan.posisi}</li>`
+            ).join('');
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
+
+    
