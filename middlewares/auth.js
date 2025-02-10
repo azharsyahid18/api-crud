@@ -13,6 +13,6 @@ module.exports = (req, res, next) => {
         next();
     } catch (error) {
         console.log("Token tidak valid!"); // Debugging
-        res.status(400).json({ error: "Token tidak valid gan" });
+        res.status(403).json({ error: "Token tidak valid gan" });
     }
 };

@@ -1,8 +1,12 @@
-const express = require('express');
-const { PrismaClient } = require('@prisma/client');
+const express = require("express");
+const router = express.Router();
+const karyawanController = require("../controllers/karyawanController");
+const authMiddleware = require("../middlewares/auth");
 
-new PrismaClient();
-new express();
+router.get("/", authMiddleware, karyawanController.getAllKaryawan);
+router.get("/:id", authMiddleware, karyawanController.getKaryawanById);
+router.post("/", authMiddleware, karyawanController.createKaryawan);
+router.put("/:id", authMiddleware, karyawanController.updateKaryawan);
+router.delete("/:id", authMiddleware, karyawanController.deleteKaryawan);
 
-app.method('/get', (req, res) =>);
-  
+module.exports = router;
