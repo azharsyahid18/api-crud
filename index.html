@@ -11,7 +11,7 @@
 
     <script>
         async function fetchData() {
-            const response = await fetch('http://localhost:4500/Karyawan');
+            const response = await fetch('http://localhost:4500/api/Karyawan');
             const data = await response.json();
             
             const dataList = document.getElementById('data-list');

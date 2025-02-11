@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-// ✅ Ambil semua data karyawan
+//mengambil data semua karyawan
 exports.getAllKaryawan = async (req, res) => {
   try {
     const karyawan = await prisma.karyawan.findMany();
@@ -40,7 +40,7 @@ exports.updateKaryawan = async (req, res) => {
   const { name, email, posisi } = req.body;
   try {
     const updatedKaryawan = await prisma.karyawan.update({
-      where: { id },
+      where: { id: parseInt(id) },
       data: { name, email, posisi },
     });
     res.json(updatedKaryawan);
@@ -88,7 +88,7 @@ exports.updateKaryawan = async (req, res) => {
     const { name, email, posisi } = req.body;
     try {
       const updatedKaryawan = await prisma.karyawan.update({
-        where: { id },
+        where: { id:parseInt(id) },
         data: { name, email, posisi },
       });
       res.json(updatedKaryawan);
