@@ -2,11 +2,12 @@ const express = require('express');
 const dotenv = require('dotenv');
 const { PrismaClient } = require("@prisma/client");
 const cors = require("cors");
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const multer = require('multer');
 const authMiddleware = require('./middlewares/auth');
 const karyawanRoutes = require('./routes/karyawanRoutes');
 const lemburRoutes = require('./routes/lemburRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 // Konfigurasi dan inisialisasi
 dotenv.config();
@@ -28,8 +29,9 @@ app.get('/selamat', (req, res) => {
 // Gunakan routes dari folder "routes"
 app.use("/api/karyawan", karyawanRoutes);
 app.use("/api/lembur", lemburRoutes);
+app.use("/api/auth",  authRoutes);  //Login API
 
 const PORT = process.env.PORT ||4500;
 app.listen(PORT, () => {                                            
-  console.log(`Server berjalan di http://localhost:${PORT}`);
+  console.log(`Server berjalan nih di http://localhost:${PORT}`);
 });

@@ -32,6 +32,7 @@ exports.createLembur = async (req, res) => {
     });
     res.json(newLembur);
   } catch (error) {
+    console.error("Error createLembur:", error);
     res.status(500).json({ error: "Gagal menambahkan data lembur" });
   }
 };

@@ -12,6 +12,7 @@ datasource db {
 model Karyawan {
   id    String    @default(uuid()) @id  //UUID sebagai primarykey
   email String  @unique
+  password String? // Isi Password
   name  String?  //Bisa ditulis kosong 
   posisi String
   date DateTime @default(now()) // Dokumentasi tanggal saat ini
